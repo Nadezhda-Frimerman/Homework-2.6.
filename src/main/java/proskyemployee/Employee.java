@@ -1,5 +1,9 @@
 package proskyemployee;
+import org.springframework.context.annotation.Bean;
+import org.springframework.stereotype.Component;
+
 import java.util.Objects;
+
 public class Employee {
 
         private String firstName;
