@@ -1,21 +1,19 @@
 package proskyemployee;
-import org.springframework.context.annotation.Bean;
-import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 
 public class Employee {
 
         private String firstName;
-        private String lastname;
+        private String lastName;
 
         public Employee(String firstName, String lastName) {
             this.firstName = firstName;
-            this.lastname = lastName;
+            this.lastName = lastName;
         }
 
-        public String getLastname() {
-            return lastname;
+        public String getLastName() {
+            return lastName;
         }
 
         public String getFirstName() {
@@ -23,7 +21,7 @@ public class Employee {
         }
 
         public int hashCode() {
-            return Objects.hash(firstName, lastname);
+            return Objects.hash(firstName, lastName);
         }
 
         public boolean equals(Object a) {
@@ -31,11 +29,11 @@ public class Employee {
             if (a == null || getClass() != a.getClass()) return false;
             Employee employee = (Employee) a;
             return Objects.equals(firstName, employee.firstName) &&
-                    Objects.equals(lastname, employee.lastname);
+                    Objects.equals(lastName, employee.lastName);
         }
         public String toString() {
             return String.format("%s %s",
-                    firstName, lastname);
+                    firstName, lastName);
         }
 
     }

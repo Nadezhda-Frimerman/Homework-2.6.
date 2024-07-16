@@ -2,6 +2,7 @@ package proskyemployee.service;
 
 import org.springframework.stereotype.Service;
 import proskyemployee.Employee;
+import proskyemployee.exception.EmployeeAlreadyAddedException;
 import proskyemployee.exception.EmployeeNotFoundException;
 import proskyemployee.exception.EmployeeStorageIsFullException;
 
@@ -14,11 +15,11 @@ public class EmployeeService {
 
     private int employeeAmount = 10;
 
-    private List<Employee> employees;
-    List<Employee> employeesAll = new ArrayList<>(List.of(
-            new Employee("Карманова", "Ольга"),
-            new Employee("Аронова", "Наталья"),
-            new Employee("Пиков", "Антон")));
+    private List<Employee> employees = new ArrayList<>(List.of(
+            new Employee("Ольга", "Карманова"),
+            new Employee("Наталья", "Аронова"),
+            new Employee("Иван","Петров"),
+            new Employee("Антон", "Пиков")));
 
     public EmployeeService(List employees) {
         this.employees = employees;
@@ -29,24 +30,36 @@ public class EmployeeService {
     }
 
     public String printAllEmployee() {
-        return employeesAll.toString();
+        return employees.toString();
     }
 
-    public void addEmployee(String firstName, String lastname) {
-        if (employeesAll.size() >= employeeAmount) {
+    public void addEmployee(String firstName, String lastName) {
+        Employee e = new Employee(firstName, lastName);
+        if (employees.size() >= employeeAmount) {
             throw new EmployeeStorageIsFullException();
+        } else if (employees.contains(e)) {
+            throw new EmployeeAlreadyAddedException();
         } else {
-            Employee e = new Employee(firstName, lastname);
-            employeesAll.add(e);
+            employees.add(e);
         }
     }
 
-    public Employee findEmployee(String firstName, String lastname) {
-        Employee e = new Employee(firstName, lastname);
-        if (employeesAll.contains(e)) {
-            return e;
-        } else {
-            throw new EmployeeNotFoundException();
+    public Employee findEmployee(String firstName, String lastName) {
+        Employee e = null;
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getFirstName() == firstName && employees.get(i).getLastName() == lastName) {
+                e = employees.get(i);
+            }
+        }
+
+        return e;
+    }
+
+    public void removeEmployee(String firstName, String lastName) {
+        for (int i = 0; i < employees.size(); i++) {
+            if (employees.get(i).getFirstName() == firstName && employees.get(i).getLastName() == lastName) {
+                employees.remove(i);
+            } else throw new EmployeeNotFoundException();
         }
     }
 }
