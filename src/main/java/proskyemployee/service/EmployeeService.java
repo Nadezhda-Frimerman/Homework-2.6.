@@ -12,17 +12,18 @@ import java.util.List;
 
 @Service
 public class EmployeeService {
+private Employee employee;
+    private final int employeeAmount;
 
-    private int employeeAmount = 10;
+    private List<Employee> employees;
 
-    private List<Employee> employees = new ArrayList<>(List.of(
-            new Employee("Ольга", "Карманова"),
-            new Employee("Наталья", "Аронова"),
-            new Employee("Иван","Петров"),
-            new Employee("Антон", "Пиков")));
-
-    public EmployeeService(List employees) {
-        this.employees = employees;
+    public EmployeeService() {
+        this.employees = new ArrayList<>(List.of(
+                new Employee("Ольга", "Карманова"),
+                new Employee("Иван","Петров"),
+                new Employee("Наталья", "Аронова"),
+                new Employee("Антон", "Пиков")));
+        this.employeeAmount=10;
     }
 
     public int getEmployeeAmount() {
@@ -45,14 +46,15 @@ public class EmployeeService {
     }
 
     public Employee findEmployee(String firstName, String lastName) {
-        Employee e = null;
+        int a=0;
         for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getFirstName() == firstName && employees.get(i).getLastName() == lastName) {
-                e = employees.get(i);
+            Employee e =employees.get(i);
+            if (e.getFirstName() == firstName && e.getLastName() == lastName) {
+                a=i;
             }
         }
 
-        return e;
+        return employees.get(a);
     }
 
     public void removeEmployee(String firstName, String lastName) {
