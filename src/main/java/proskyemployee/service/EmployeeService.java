@@ -46,23 +46,30 @@ private Employee employee;
     }
 
     public Employee findEmployee(String firstName, String lastName) {
-        int a=0;
+        int a=-1;
         for (int i = 0; i < employees.size(); i++) {
-            Employee e =employees.get(i);
-            if (e.getFirstName() == firstName && e.getLastName() == lastName) {
+            if (employees.get(i).getFirstName().equals(firstName)
+                    && employees.get(i).getLastName().equals(lastName)) {
                 a=i;
             }
         }
-
-        return employees.get(a);
+        if (a<0){
+            throw new EmployeeNotFoundException();
+        }
+        else return employees.get(a);
     }
 
-    public void removeEmployee(String firstName, String lastName) {
+    public void removeEmployee (String firstName, String lastName) {
+        int r=-1;
         for (int i = 0; i < employees.size(); i++) {
-            if (employees.get(i).getFirstName() == firstName && employees.get(i).getLastName() == lastName) {
-                employees.remove(i);
-            } else throw new EmployeeNotFoundException();
+            if (employees.get(i).getFirstName().equals(firstName)
+                    && employees.get(i).getLastName().equals(lastName)) {
+                r=i;
+            }
         }
+        if (r<0) {throw new EmployeeNotFoundException();}
+        else {employees.remove(r);}
+
     }
 }
 
